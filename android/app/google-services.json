@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "354617913985",
+    "firebase_url": "https://randevusistemi-c6c67.firebaseio.com",
+    "project_id": "randevusistemi-c6c67",
+    "storage_bucket": "randevusistemi-c6c67.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:354617913985:android:183b6f62f845e065501380",
+        "android_client_info": {
+          "package_name": "com.example.randevusistemi"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "354617913985-a3iu69r8qie53c6lf73algmkp3cq1rot.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDOhQxOp4VZCL36OSuBveE7rj2DhvDB-YI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "354617913985-a3iu69r8qie53c6lf73algmkp3cq1rot.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
