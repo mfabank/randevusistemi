@@ -12,7 +12,7 @@ class DrawerPage extends StatelessWidget {
           Container(
             width: double.infinity,
             padding: EdgeInsets.all(20),
-            color: Colors.deepPurpleAccent,
+            color: Colors.blueGrey,
             child: Column(
               children: [
                 Container(
@@ -23,7 +23,7 @@ class DrawerPage extends StatelessWidget {
                     shape: BoxShape.circle,
                     image: DecorationImage(
                         image: NetworkImage(
-                            "https://cdn.pixabay.com/photo/2016/03/12/23/18/man-1253004_960_720.jpg"),
+                            "https://cdn.pixabay.com/photo/2014/04/03/10/32/businessman-310819_960_720.png"),
                         fit: BoxFit.fill),
                   ),
                 ),
