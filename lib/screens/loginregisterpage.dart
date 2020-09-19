@@ -152,7 +152,7 @@ class _LoginRegisterPageState extends State<LoginRegisterPage> {
                         ),
                         Center(
                           child: Text(
-                            "Google ile gir",
+                            "Google ile giriş yap",
                             style: TextStyle(fontWeight: FontWeight.bold),
                           ),
                         )
