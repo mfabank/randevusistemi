@@ -1,8 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:randevusistemi/models/dialogBox.dart';
 import 'package:randevusistemi/screens/registerpage.dart';
 import 'package:randevusistemi/screens/sifredegistir.dart';
-
 import 'homepage.dart';
 
 
@@ -14,7 +14,7 @@ class LoginRegisterPage extends StatefulWidget {
 
 class _LoginRegisterPageState extends State<LoginRegisterPage> {
   String _email, _pass;
-
+  DialogBox dialogBox = DialogBox();
   final GlobalKey<FormState> _formkey = new GlobalKey<FormState>();
 
   @override
@@ -233,6 +233,7 @@ class _LoginRegisterPageState extends State<LoginRegisterPage> {
             context, MaterialPageRoute(builder: (context) => HomePage()));
       }
       catch(e){
+        dialogBox.information(context, "Hatalı Giriş", "Kullanıcı adı ve ya Şifre hatalı");
         print(e.toString());
       }
     }

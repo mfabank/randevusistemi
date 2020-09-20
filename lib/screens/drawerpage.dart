@@ -1,9 +1,21 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'loginregisterpage.dart';
 
+class DrawerPage extends StatefulWidget {
+  const DrawerPage({
+    Key key,
+    this.user
+  })
+      : super(key: key);
+  // ignore: deprecated_member_use
+  final FirebaseUser user;
 
+  @override
+  _DrawerPageState createState() => _DrawerPageState();
+}
 
-class DrawerPage extends StatelessWidget {
+class _DrawerPageState extends State<DrawerPage> {
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -62,8 +74,9 @@ class DrawerPage extends StatelessWidget {
               "Çıkış",
               style: TextStyle(fontSize: 18),
             ),
-            onTap: (){
-              Navigator.push(context, MaterialPageRoute(builder: (context)=> LoginRegisterPage()));
+            onTap: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => LoginRegisterPage()));
             },
           ),
         ],

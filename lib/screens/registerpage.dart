@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:randevusistemi/models/dialogBox.dart';
 import 'package:randevusistemi/screens/homepage.dart';
 import 'package:randevusistemi/screens/loginregisterpage.dart';
 
@@ -10,6 +11,7 @@ class RegisterPage extends StatefulWidget {
 
 class RegisterPageState extends State<RegisterPage> {
   String _email, _pass;
+  DialogBox dialogBox = DialogBox();
 
   final GlobalKey<FormState> _formkey = new GlobalKey<FormState>();
   @override
@@ -58,7 +60,6 @@ class RegisterPageState extends State<RegisterPage> {
                       if (input.isEmpty) {
                         return "Lütfen emaili boş bırakmayınız";
                       }
-
                     },
                     onSaved: (input) => _email = input,
                     decoration: InputDecoration(
@@ -80,9 +81,10 @@ class RegisterPageState extends State<RegisterPage> {
                   TextFormField(
                     validator: (input) {
                       if (input.isEmpty) {
-                        return "Lütfen emaili boş bırakmayınız";
+                        return "Lütfen şifreyi boş bırakmayınız";
+                      } else if (input.length < 6) {
+                        return "Lütfen en az 6 karakter seçin";
                       }
-
                     },
                     onSaved: (input) => _pass = input,
                     decoration: InputDecoration(
@@ -102,7 +104,6 @@ class RegisterPageState extends State<RegisterPage> {
                   SizedBox(
                     height: 5,
                   ),
-
                   SizedBox(
                     height: 10,
                   ),
@@ -114,7 +115,6 @@ class RegisterPageState extends State<RegisterPage> {
                       color: Colors.blueGrey[100],
                       elevation: 7,
                       child: InkWell(
-
                         child: Center(
                           child: Text(
                             "Kayıt ol",
@@ -128,10 +128,7 @@ class RegisterPageState extends State<RegisterPage> {
                       ),
                     ),
                   ),
-                  SizedBox(
-                      height: 60
-                  ),
-
+                  SizedBox(height: 60),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
@@ -140,12 +137,18 @@ class RegisterPageState extends State<RegisterPage> {
                         width: 5,
                       ),
                       InkWell(
-                        onTap: () {//kayıt ol
-                          Navigator.push(context, MaterialPageRoute(builder: (context)=> LoginRegisterPage()));
+                        onTap: () {
+                          //kayıt ol
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => LoginRegisterPage()));
                         },
                         child: Text(
                           "Hemen giriş yap!",
-                          style: TextStyle(color: Colors.blueGrey,decoration: TextDecoration.underline),
+                          style: TextStyle(
+                              color: Colors.blueGrey,
+                              decoration: TextDecoration.underline),
                         ),
                       )
                     ],
@@ -154,30 +157,26 @@ class RegisterPageState extends State<RegisterPage> {
               ),
             ),
           ),
-
-
         ],
       ),
     );
   }
+
   Future<void> kayitOl() async {
     final form = _formkey.currentState;
 
     if (form.validate()) {
-
       form.save();
 
-      try{
+      try {
         UserCredential user = await FirebaseAuth.instance
             .createUserWithEmailAndPassword(email: _email, password: _pass);
         Navigator.push(
             context, MaterialPageRoute(builder: (context) => HomePage()));
-      }
-      catch(e){
-        print(e.toString());
+      } catch (e) {
+        dialogBox.information(context, "Hatalı Giriş", "");
+        return (e.toString());
       }
     }
   }
-
-
 }
