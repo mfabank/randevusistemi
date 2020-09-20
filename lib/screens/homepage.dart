@@ -8,15 +8,16 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  var listem = ["fatih", "murat", "ali", "veli", "özkan", "emirhan", "cengiz"];
 
   TimeOfDay _timeOfDay;
 
   @override
   void initState() {
-
     super.initState();
-    _timeOfDay=TimeOfDay.now();
+    _timeOfDay = TimeOfDay.now();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,6 +34,23 @@ class _HomePageState extends State<HomePage> {
       body: Container(
         child: Column(
           children: <Widget>[
+            Expanded(
+              child: ListView.builder(
+                itemCount: listem.length,
+                itemBuilder: (context, index) {
+                  return ListTile(
+                    leading: Icon(Icons.person),
+                    trailing: Icon(Icons.cancel),
+                    dense: true,
+                    title: Text(listem[index]),
+                    subtitle: Text(
+                      "${selectedDate.toLocal().toString()}".split(' ')[0],
+                    ),
+
+                  );
+                },
+              ),
+            ),
             Text(
               "${selectedDate.toLocal()}".split(' ')[0],
               style: TextStyle(fontSize: 55, fontWeight: FontWeight.bold),
@@ -48,11 +66,8 @@ class _HomePageState extends State<HomePage> {
         child: Icon(Icons.date_range),
         backgroundColor: Colors.blueGrey,
         onPressed: () {
-
           _selectDate(context);
-
         },
-
       ),
     );
   }
@@ -66,7 +81,12 @@ class _HomePageState extends State<HomePage> {
       initialDate: DateTime.now(),
       firstDate: DateTime(2000),
       lastDate: DateTime(2100),
-      builder: (context, child) => Theme(data: ThemeData(primarySwatch:Colors.blueGrey,primaryColor: Colors.white,accentColor: Colors.transparent), child: child),
+      builder: (context, child) => Theme(
+          data: ThemeData(
+              primarySwatch: Colors.blueGrey,
+              primaryColor: Colors.white,
+              accentColor: Colors.transparent),
+          child: child),
     );
     if (picked != null && picked != selectedDate)
       setState(() {
@@ -75,17 +95,22 @@ class _HomePageState extends State<HomePage> {
       });
   }
 
-
   _pickTime() async {
-    TimeOfDay timeOfDay =await showTimePicker(context: context,initialTime:_timeOfDay,
+    TimeOfDay timeOfDay = await showTimePicker(
+        context: context,
+        initialTime: _timeOfDay,
         builder: (context, child) {
-          return(Theme(data: ThemeData(primarySwatch:Colors.blueGrey,primaryColor: Colors.white,accentColor: Colors.blueGrey[100]), child:child));
+          return (Theme(
+              data: ThemeData(
+                  primarySwatch: Colors.blueGrey,
+                  primaryColor: Colors.white,
+                  accentColor: Colors.blueGrey[100]),
+              child: child));
         });
 
-
-    if(timeOfDay!=null)
+    if (timeOfDay != null)
       setState(() {
-        _timeOfDay=timeOfDay;
+        _timeOfDay = timeOfDay;
       });
   }
 }
