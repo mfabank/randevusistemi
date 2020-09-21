@@ -6,7 +6,6 @@ import 'package:randevusistemi/screens/sifredegistir.dart';
 import 'homepage.dart';
 
 
-
 class LoginRegisterPage extends StatefulWidget {
   @override
   _LoginRegisterPageState createState() => _LoginRegisterPageState();
