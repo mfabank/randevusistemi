@@ -1,6 +1,14 @@
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:gradient_app_bar/gradient_app_bar.dart';
-import 'drawerpage.dart';
+import 'package:randevusistemi/days/carsamba.dart';
+import 'package:randevusistemi/days/cuma.dart';
+import 'package:randevusistemi/days/cumartesi.dart';
+import 'package:randevusistemi/days/pazartesi.dart';
+import 'package:randevusistemi/days/persembe.dart';
+import 'package:randevusistemi/days/sali.dart';
+import 'package:randevusistemi/models/gunler.dart';
+import 'package:randevusistemi/screens/drawerpage.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -8,20 +16,19 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  var listem = ["fatih", "murat", "ali", "veli", "özkan", "emirhan", "cengiz"];
-
-  TimeOfDay _timeOfDay;
-
-  @override
-  void initState() {
-    super.initState();
-    _timeOfDay = TimeOfDay.now();
-  }
+  List<Gunler> gunler = [
+    Gunler("Pazartesi"),
+    Gunler("Salı"),
+    Gunler("Çarşamba"),
+    Gunler("Perşembe"),
+    Gunler("Cuma"),
+    Gunler("Cumartesi")
+  ];
+  Gunler seciliGun;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: DrawerPage(),
       appBar: GradientAppBar(
         title: Text(
           "Randevu al",
@@ -31,86 +38,64 @@ class _HomePageState extends State<HomePage> {
         backgroundColorStart: Colors.black87,
         backgroundColorEnd: Colors.blueGrey,
       ),
-      body: Container(
-        child: Column(
-          children: <Widget>[
-            Expanded(
-              child: ListView.builder(
-                itemCount: listem.length,
-                itemBuilder: (context, index) {
+      drawer: DrawerPage(),
+      body: Column(
+        children: <Widget>[
+          Expanded(
+            child: ListView.builder(
+                itemCount: gunler.length,
+                itemBuilder: (BuildContext context, int index) {
                   return ListTile(
-                    leading: Icon(Icons.person),
-                    trailing: Icon(Icons.cancel),
-                    dense: true,
-                    title: Text(listem[index]),
-                    subtitle: Text(
-                      "${selectedDate.toLocal().toString()}".split(' ')[0],
-                    ),
+                    title: Text(gunler[index].gunAdi),
+                    trailing: Icon(Icons.arrow_forward),
+                    onTap: () {
+                      this.seciliGun = gunler[index];
 
+                      if (seciliGun.gunAdi == "Pazartesi") {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => Pazartesi()));
+                      } else if (seciliGun.gunAdi == "Salı") {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) => Sali()));
+                      } else if (seciliGun.gunAdi == "Çarşamba") {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => Carsamba()));
+                      } else if (seciliGun.gunAdi == "Perşembe") {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => Persembe()));
+                      } else if (seciliGun.gunAdi == "Cuma") {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) => Cuma()));
+                      } else if (seciliGun.gunAdi == "Cumartesi") {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => Cumartesi()));
+                      }
+                    },
                   );
+                }),
+          ),
+          Container(
+            padding: EdgeInsets.only(left: 90),
+            child: RotateAnimatedTextKit(
+                onTap: () {
+                  print("Tap Event");
                 },
-              ),
+                text: ["Randevu İçin ", "Gün Seçiniz"],
+                textStyle: TextStyle(fontSize: 40.0),
+                textAlign: TextAlign.start,
+                alignment: AlignmentDirectional.topStart // or Alignment.topLeft
             ),
-            Text(
-              "${selectedDate.toLocal()}".split(' ')[0],
-              style: TextStyle(fontSize: 55, fontWeight: FontWeight.bold),
-            ),
-            Text(
-              "${_timeOfDay.hour}:${_timeOfDay.minute}".split(' ')[0],
-              style: TextStyle(fontSize: 55, fontWeight: FontWeight.bold),
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.date_range),
-        backgroundColor: Colors.blueGrey,
-        onPressed: () {
-          _selectDate(context);
-        },
+          ),
+        ],
       ),
     );
-  }
-
-  DateTime selectedDate = DateTime.now();
-  _selectDate(BuildContext context) async {
-    final DateTime picked = await showDatePicker(
-      confirmText: "Seç",
-      locale: const Locale("tr", "TR"),
-      context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime(2000),
-      lastDate: DateTime(2100),
-      builder: (context, child) => Theme(
-          data: ThemeData(
-              primarySwatch: Colors.blueGrey,
-              primaryColor: Colors.white,
-              accentColor: Colors.transparent),
-          child: child),
-    );
-    if (picked != null && picked != selectedDate)
-      setState(() {
-        selectedDate = picked;
-        _pickTime();
-      });
-  }
-
-  _pickTime() async {
-    TimeOfDay timeOfDay = await showTimePicker(
-        context: context,
-        initialTime: _timeOfDay,
-        builder: (context, child) {
-          return (Theme(
-              data: ThemeData(
-                  primarySwatch: Colors.blueGrey,
-                  primaryColor: Colors.white,
-                  accentColor: Colors.blueGrey[100]),
-              child: child));
-        });
-
-    if (timeOfDay != null)
-      setState(() {
-        _timeOfDay = timeOfDay;
-      });
   }
 }
